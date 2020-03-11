@@ -43,6 +43,8 @@ GEM
     byebug (11.1.1)
     concurrent-ruby (1.1.6)
     crass (1.0.6)
+    doorkeeper (5.3.1)
+      railties (>= 5)
     erubi (1.9.0)
     ffi (1.12.2)
     globalid (0.4.2)
@@ -122,6 +124,7 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
+  doorkeeper (~> 5.3)
   listen (>= 3.0.5, < 3.2)
   pg (>= 0.18, < 2.0)
   puma (~> 3.7)
