@@ -14,8 +14,7 @@ class Api::V1::PostsController < BaseController
 
   # POST /posts
   def create
-    @post = Post.new(post_params)
-    @post.user = current_user
+    @post = current_user.posts.build(post_params)
     if @post.save
       render json: @post, status: :created, location: @post
     else
@@ -45,6 +44,6 @@ class Api::V1::PostsController < BaseController
 
     # Only allow a trusted parameter "white list" through.
     def post_params
-      params.require(:post).permit(:title, :description, :user_id)
+      params.require(:post).permit(:title, :description, :user_id, :location_id)
     end
 end
