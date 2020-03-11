@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200311122825) do
+ActiveRecord::Schema.define(version: 20200311140141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "locations", force: :cascade do |t|
+    t.float "longitude"
+    t.float "latitude"
+    t.string "city"
+    t.string "country"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "oauth_access_grants", force: :cascade do |t|
     t.bigint "resource_owner_id", null: false
@@ -63,6 +72,8 @@ ActiveRecord::Schema.define(version: 20200311122825) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "location_id"
+    t.index ["location_id"], name: "index_posts_on_location_id"
     t.index ["title"], name: "index_posts_on_title"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
@@ -78,12 +89,16 @@ ActiveRecord::Schema.define(version: 20200311122825) do
     t.string "nickname"
     t.string "firstname"
     t.string "lastname"
+    t.bigint "location_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["location_id"], name: "index_users_on_location_id"
     t.index ["nickname"], name: "index_users_on_nickname"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "posts", "locations"
   add_foreign_key "posts", "users"
+  add_foreign_key "users", "locations"
 end
