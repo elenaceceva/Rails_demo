@@ -26,7 +26,8 @@ gem 'puma', '~> 3.7'
 # gem 'rack-cors'
 gem "doorkeeper", "~> 5.3"
 gem 'devise'
-
+gem 'activeadmin'
+gem 'geokit-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

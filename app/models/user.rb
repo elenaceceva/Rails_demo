@@ -1,13 +1,23 @@
 class User < ApplicationRecord
+  attr_accessor :location_params
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
   has_many :posts
-  belongs_to :location
-  validates :email, length: { maximum: 120 }, uniqueness: true
+  belongs_to :location, optional: true
+  #
+  validates :email, length: { maximum: 120 }
   validates :nickname, presence: true, length: { maximum: 20 }, uniqueness: true
   validates :firstname, length: { maximum: 40}
   validates :lastname, length: { maximum: 40}
+
+
+  before_save do
+    puts self.inspect
+    puts self.location_params
+  end
 
 end

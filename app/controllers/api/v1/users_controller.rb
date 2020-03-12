@@ -5,7 +5,17 @@ class Api::V1::UsersController < BaseController
     render json: @users
   end
 
+
   def create
+    city = params[:city]
+    country = params[:country]
+    @location = Location.where(city == :city && country == :country)
+
+    if @location.nil?
+      @location = Location.new(user_params[:location_attributes])
+      @location.save
+    end
+    @user.location_id = @location.id
     @user = User.new(user_params)
     if @user.save
       render json: @user, status: 201, location: @user
@@ -35,6 +45,6 @@ class Api::V1::UsersController < BaseController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :nickname, :firstname, :lastname, :location_id)
+    params.require(:user).permit(:email, :password, :nickname, :firstname, :lastname, :location_id, location_attributes: [:city, :country, :latitude, :longitude ] )
   end
 end
