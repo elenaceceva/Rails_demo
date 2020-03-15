@@ -14,8 +14,14 @@ class Api::V1::PostsController < BaseController
 
   # POST /posts
   def create
-    @post = Post.new(post_params)
-    @post.user = current_user
+    @location = Location.where('country LIKE ?', "%#{user_params[:location_attributes[:country]]}%")
+    unless @location.exists?
+      @location = Location.new(post_params[:location_attributes])
+      @location.save
+    end
+
+    @post = current_user.posts.build(post_params)
+    @post.location_id = @location.id
     if @post.save
       render json: @post, status: :created, location: @post
     else
@@ -45,6 +51,6 @@ class Api::V1::PostsController < BaseController
 
     # Only allow a trusted parameter "white list" through.
     def post_params
-      params.require(:post).permit(:title, :description, :user_id)
+      params.require(:post).permit(:title, :description, :user_id, :location_id, location_attributes: [:city, :country, :latitude, :longitude ])
     end
 end
