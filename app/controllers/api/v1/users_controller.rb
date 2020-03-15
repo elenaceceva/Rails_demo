@@ -7,11 +7,10 @@ class Api::V1::UsersController < BaseController
 
 
   def create
-    city = params[:city]
-    country = params[:country]
-    @location = Location.where(city == :city && country == :country)
+    @location = Location.find_by(country: user_params[:location_attributes[:country]],
+                                            city: user_params[:location_attributes[:city]])
 
-    if @location.nil?
+    unless @location.exists?
       @location = Location.new(user_params[:location_attributes])
       @location.save
     end
@@ -45,6 +44,6 @@ class Api::V1::UsersController < BaseController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :nickname, :firstname, :lastname, :location_id, location_attributes: [:city, :country, :latitude, :longitude ] )
+    params.require(:user).permit(:email, :password, :nickname, :firstname, :lastname, :location_id, location_attributes: [:country, :city, :latitude, :longitude ] )
   end
 end

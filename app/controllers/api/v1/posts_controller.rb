@@ -14,11 +14,8 @@ class Api::V1::PostsController < BaseController
 
   # POST /posts
   def create
-    city = params[:city]
-    country = params[:country]
-    @location = Location.where(city == :city && country == :country)
-
-    if @location.nil?
+    @location = Location.where('country LIKE ?', "%#{user_params[:location_attributes[:country]]}%")
+    unless @location.exists?
       @location = Location.new(post_params[:location_attributes])
       @location.save
     end

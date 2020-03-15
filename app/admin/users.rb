@@ -5,7 +5,7 @@ ActiveAdmin.register User do
   #
   # Uncomment all parameters which should be permitted for assignment
 
-  permit_params :email, :password, :nickname, :firstname, :lastname, :location_id, location_params: [:city, :country, :latitude, :longitude ]
+  permit_params :email, :password, :nickname, :firstname, :lastname, :location_id, location_attributes: [:city, :country, :latitude, :longitude ]
   #
   # or
   #

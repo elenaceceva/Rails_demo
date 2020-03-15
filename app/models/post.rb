@@ -5,4 +5,5 @@ class Post < ApplicationRecord
   validates :description, length: { maximum: 1000 }, presence: true
 
   accepts_nested_attributes_for :location
+
 end
