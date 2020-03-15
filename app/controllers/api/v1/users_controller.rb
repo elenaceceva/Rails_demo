@@ -7,19 +7,21 @@ class Api::V1::UsersController < BaseController
 
 
   def create
-    @location = Location.find_by(country: user_params[:location_attributes[:country]],
-                                            city: user_params[:location_attributes[:city]])
+    ActiveRecord::Base.transaction do
+    @location = Location.where(country: post_params[:location_attributes[:country]], city: post_params[:location_attributes[:city]]).first
 
-    unless @location.exists?
-      @location = Location.new(user_params[:location_attributes])
+    unless @location
+      @location = Location.new(post_params[:location_attributes])
       @location.save
     end
+
     @user.location_id = @location.id
     @user = User.new(user_params)
     if @user.save
       render json: @user, status: 201, location: @user
     else
       render json: @user.errors, status: 422
+      end
     end
   end
 
@@ -44,6 +46,6 @@ class Api::V1::UsersController < BaseController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :nickname, :firstname, :lastname, :location_id, location_attributes: [:country, :city, :latitude, :longitude ] )
+    params.require(:user).permit(:email, :password, :nickname, :firstname, :lastname, :location_id, location_attributes: [:country, :city, :latitude, :longitude ])
   end
 end

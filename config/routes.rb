@@ -2,10 +2,10 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   use_doorkeeper
-  devise_for :users, only: %w[sessions#new session#destroy]
 
   namespace :api do
     namespace :v1 do
+      devise_for :users, only: :sessions
       resources :users do
         resources :posts
         end
@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :posts, only: [:index]
+      get 'search/:action' => 'searches#:action'
     end
   end
 
