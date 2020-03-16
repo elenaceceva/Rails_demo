@@ -7,19 +7,12 @@ class Api::V1::UsersController < BaseController
 
 
   def create
-    ActiveRecord::Base.transaction do
-    @location = Location.where("country ILIKE ? OR city ILIKE ?", "%#{user_params[:location_attributes[:country]]}%", "%#{user_params[:location_attributes[:city]]}%" ).first
-    unless @location
-      @location = Location.new(user_params[:location_attributes])
-      @location.save
-    end
-    @user.location_id = @location.id
     @user = User.new(user_params)
+
     if @user.save
-      render json: @user, status: 201, location: @user
+      render json: @user, status: 201, data: @user
     else
       render json: @user.errors, status: 422
-      end
     end
   end
 

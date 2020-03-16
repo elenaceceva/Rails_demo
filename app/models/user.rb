@@ -13,6 +13,17 @@ class User < ApplicationRecord
   validates :nickname, presence: true, length: { maximum: 20 }, uniqueness: true
   validates :firstname, length: { maximum: 40}
   validates :lastname, length: { maximum: 40}
+  before_save :assign_location
+
+  def assign_location
+    location = Location.find_or_create_by(country: location_attributes[:country],
+                                          city: location_attributes[:city],
+                                          longitude: location_attributes[:longitude],
+                                          latitude: location_attributes[:latitude])
+
+
+    self.location_id = location.id
+  end
 
 
 end
