@@ -8,13 +8,11 @@ class Api::V1::UsersController < BaseController
 
   def create
     ActiveRecord::Base.transaction do
-    @location = Location.where(country: post_params[:location_attributes[:country]], city: post_params[:location_attributes[:city]]).first
-
+    @location = Location.where("country ILIKE ? OR city ILIKE ?", "%#{user_params[:location_attributes[:country]]}%", "%#{user_params[:location_attributes[:city]]}%" ).first
     unless @location
-      @location = Location.new(post_params[:location_attributes])
+      @location = Location.new(user_params[:location_attributes])
       @location.save
     end
-
     @user.location_id = @location.id
     @user = User.new(user_params)
     if @user.save

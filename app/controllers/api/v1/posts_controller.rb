@@ -20,13 +20,7 @@ class Api::V1::PostsController < BaseController
   # POST /posts
   def create
     ActiveRecord::Base.transaction do
-    @location = Location.where(country: post_params[:location_attributes[:country]], city: post_params[:location_attributes[:city]]).first
-
-    unless @location
-      @location = Location.new(post_params[:location_attributes])
-      @location.save
-    end
-
+    @location = Location.where("country ILIKE ? OR city ILIKE ?", "%#{post_params[:location_attributes[:country]]}%", "%#{post_params[:location_attributes[:city]]}%" ).first
     @post = current_user.posts.build(post_params)
     @post.location_id = @location.id
     if @post.save

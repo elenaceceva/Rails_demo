@@ -15,9 +15,4 @@ class User < ApplicationRecord
   validates :lastname, length: { maximum: 40}
 
 
-  #before_save do
-  #puts self.inspect
-  #puts self.location_params
-  #end
-
 end
