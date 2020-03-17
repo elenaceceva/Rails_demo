@@ -9,6 +9,9 @@ Doorkeeper.configure do
   api_only
   base_controller 'ActionController::API'
   enforce_configured_scopes
+  admin_authenticator do |routes|
+    current_user || warden.authenticate!(scope: :user)
+  end
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
     raise "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"

@@ -1,5 +1,5 @@
 class Api::V1::UsersController < BaseController
-
+  before_action :doorkeeper_authorize!
   def index
     @users = User.all.order("updated_at DESC")
     render json: @users
@@ -23,6 +23,7 @@ class Api::V1::UsersController < BaseController
 
   def update
     @user = User.find(params[:id])
+    authorize @user
     if @user.update_attributes(user_params)
       render json: @user, status: 200, data: @user
     else

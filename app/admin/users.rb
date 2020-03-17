@@ -22,9 +22,11 @@ ActiveAdmin.register User do
       f.input :nickname
       f.input :firstname
       f.input :lastname
-      f.fields_for :location_params do |ff|
+      f.fields_for :location_attributes do |ff|
         ff.input :city
         ff.input :country
+        ff.input :latitude
+        ff.input :longitude
       end
     end
     f.actions
@@ -35,8 +37,6 @@ ActiveAdmin.register User do
     column :nickname
     column :firstname
     column :lastname
-    column :country
-    column :city
     actions
   end
 

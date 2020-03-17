@@ -12,9 +12,11 @@ ActiveAdmin.register Post do
       f.input :user_id
       f.input :title
       f.input :description
-      f.fields_for :location do |ff|
+      f.fields_for :location_attributes do |ff|
         ff.input :city
         ff.input :country
+        ff.input :latitude
+        ff.input :longitude
       end
     end
     f.actions

@@ -1,10 +1,9 @@
 class Api::V1::PostsController < BaseController
   before_action :set_post, only: [:show, :update, :destroy]
-
-  # GET /posts
+  before_action :doorkeeper_authorize!
   def index
     if (params.has_key? 'user_id')
-      @posts = Post.where(user_id: user_id).order('created_at DESC')
+      @posts = Post.where(user_id: params[:user_id]).order('created_at DESC')
       render json: @posts
     else
       @posts = Post.all.order("created_at DESC")
@@ -34,6 +33,7 @@ class Api::V1::PostsController < BaseController
   def update
     @user = User.find(params[:user_id])
     @post = @user.posts.find(params[:id])
+    authorize @post
     if @post.update_attributes(post_params)
       render json: @post
     else
@@ -43,6 +43,7 @@ class Api::V1::PostsController < BaseController
 
   # DELETE /posts/1
   def destroy
+    authorize @post
     @post.destroy
   end
 
