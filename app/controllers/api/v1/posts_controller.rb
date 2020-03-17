@@ -33,7 +33,7 @@ class Api::V1::PostsController < BaseController
   # PATCH/PUT /posts/1
   def update
     @user = User.find(params[:user_id])
-    @post = @user.posts.find(:id)
+    @post = @user.posts.find(params[:id])
     if @post.update_attributes(post_params)
       render json: @post
     else

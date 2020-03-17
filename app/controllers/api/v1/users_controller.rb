@@ -23,8 +23,8 @@ class Api::V1::UsersController < BaseController
 
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params)
-      render json: @user, status: 200, location: @user
+    if @user.update_attributes(user_params)
+      render json: @user, status: 200, data: @user
     else
       render json: @user.errors, status: 422
     end
