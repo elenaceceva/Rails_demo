@@ -7,7 +7,6 @@ class Api::V1::UsersController < BaseController
       param :nickname, String, :desc => "Nickname", :required => true
       param :firstname, String, :desc => "Firstname"
       param :lastname, String, :desc => "Lastname"
-      param :location_id, Integer, required: true
     end
   end
 

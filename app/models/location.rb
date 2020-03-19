@@ -1,5 +1,4 @@
 class Location < ApplicationRecord
-  #attr_accessor :city, :country, :latitude, :longitude
 
   validates :longitude, presence: true
   validates :latitude, presence: true
@@ -7,6 +6,11 @@ class Location < ApplicationRecord
   validates :country, length: {maximum: 120}, presence: true
   has_many :users
   has_many :posts
-  acts_as_mappable
+  acts_as_mappable :default_units => :kms,
+                   :default_formula => :sphere,
+                   :distance_field_name => :distance,
+                   :lat_column_name => :latitude,
+                   :lng_column_name => :longitude
+
 
 end

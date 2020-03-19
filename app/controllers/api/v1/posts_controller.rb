@@ -7,7 +7,6 @@ class Api::V1::PostsController < BaseController
       param :title, String, :desc => "Title" , :required => true
       param :description, String, :desc => "Description", :required => true
       param :user_id, Integer, required: true
-      param :location_id, Integer, required: true
     end
   end
 

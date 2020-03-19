@@ -6,7 +6,6 @@ class Api::V1::SearchesController < BaseController
       param :nickname, String, :desc => "Nickname", :required => true
       param :firstname, String, :desc => "Firstname"
       param :lastname, String, :desc => "Lastname"
-      param :location_id, Integer, required: true
     end
   end
 
@@ -15,7 +14,6 @@ class Api::V1::SearchesController < BaseController
       param :title, String, :desc => "Title" , :required => true
       param :description, String, :desc => "Description", :required => true
       param :user_id, Integer, required: true
-      param :location_id, Integer, required: true
     end
   end
 
@@ -32,15 +30,8 @@ class Api::V1::SearchesController < BaseController
   returns :array_of => :user, :desc => 'List of users'
   param_group :user
   def users_by_nickname
-    search do
-      @matches = []
-      User.all.each do |user|
-        if (user.nickname.include? params[:nickname])
-          matches << user
-        end
-      end
-      @matches
-    end
+    @results = User.where('nickname ILIKE ?', params[:nickname])
+    render json: @results
   end
 
   api :GET, '/api/v1/search/users_by_location?latitude=:latitude&longitude=:longitude', 'Show all users within 10km of location'
@@ -48,29 +39,21 @@ class Api::V1::SearchesController < BaseController
   param_group :user
   param_group :location_attributes
   def users_by_location
-    search do
-      @users = []
-      @locations = Location.within(10, :origin => [params[:latitude], params[:longitude]])
-      @locations.each do |location|
-        @users << location.users
-      end
-      @users.flatten
+    @users = []
+    @locations = Location.within(10, :origin => [params[:latitude], params[:longitude]])
+    @locations.each do |location|
+    @users << location.users
     end
+    @users.flatten
+    render json: @users
   end
 
   api :GET, '/api/v1/search/posts_by_title?title=:title', 'Lists all posts with given title'
   returns :array_of => :user, :desc => 'List of posts'
   param_group :post
   def posts_by_title
-    search do
-      @matches = []
-      Post.all.each do |post|
-        if (post.title.include? params[:title])
-          @matches << post
-        end
-      end
-      @matches
-    end
+    @results = Post.where('title ILIKE ?', params[:title])
+    render json: @results
   end
 
   api :GET, '/api/v1/search/posts_by_location?latitude=:latitude&longitude=:longitude', 'Show all posts within 10km of location'
@@ -78,25 +61,13 @@ class Api::V1::SearchesController < BaseController
   param_group :post
   param_group :location_attributes
   def posts_by_location
-    search do
-      @posts = []
-      @locations = Location.within(10, :origin => [params[:latitude], params[:longitude]])
-      @locations.each do |location|
-        @posts << location.posts
-      end
-      @posts.flatten
+    @posts = []
+    @locations = Location.within(10, :origin => [params[:latitude], params[:longitude]])
+    @locations.each do |location|
+      @posts << location.posts
     end
+    @posts.flatten
+    render json: @posts
   end
-
-  private
-
-  def search(&block)
-    if params[:q]
-      @results = yield if block_given?
-      render json: @results
-    else
-      redirect_to root_url, :notice => 'No search query was specified.'
-    end
-  end
-
 end
+
