@@ -1,5 +1,5 @@
 class Location < ApplicationRecord
-  attr_accessor :city, :country, :latitude, :longitude
+  #attr_accessor :city, :country, :latitude, :longitude
 
   validates :longitude, presence: true
   validates :latitude, presence: true

@@ -5,7 +5,7 @@ ActiveAdmin.register User do
   #
   # Uncomment all parameters which should be permitted for assignment
 
-  permit_params :email, :password, :nickname, :firstname, :lastname, :location_id, location_attributes: [:city, :country, :latitude, :longitude ]
+  permit_params :email, :password, :nickname, :firstname, :lastname, location_attributes: [:city, :country, :latitude, :longitude ]
   #
   # or
   #
@@ -37,10 +37,12 @@ ActiveAdmin.register User do
     column :nickname
     column :firstname
     column :lastname
+    column :location
     actions
   end
 
   show do
-    attributes_table :email, :nickname, :firstname, :lastname
+    attributes_table :email, :nickname, :firstname, :lastname, :location
   end
+
 end

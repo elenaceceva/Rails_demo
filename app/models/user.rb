@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   has_many :posts
   belongs_to :location, optional: true
-  accepts_nested_attributes_for :location
+  #accepts_nested_attributes_for :location
   validates :email, length: { maximum: 120 }
   validates :nickname, presence: true, length: { maximum: 20 }, uniqueness: true
   validates :firstname, length: { maximum: 40}

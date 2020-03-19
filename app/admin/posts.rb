@@ -26,11 +26,12 @@ ActiveAdmin.register Post do
     column :title
     column :description
     column :user_id
+    column :location
     actions
   end
 
   show do
-    attributes_table :title, :description, :user_id
+    attributes_table :title, :description, :user_id, :location
   end
   #
   # or

@@ -5,7 +5,7 @@ class Post < ApplicationRecord
   validates :title, length: { maximum: 120 }, presence: true
   validates :description, length: { maximum: 1000 }, presence: true
 
-  accepts_nested_attributes_for :location
+  #accepts_nested_attributes_for :location
   before_save :assign_location
 
   def assign_location
