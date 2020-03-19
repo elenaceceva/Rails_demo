@@ -19,8 +19,18 @@ class Api::V1::SearchesController < BaseController
     end
   end
 
+  def_param_group :location_attributes do
+    param :location_attributes, Hash, :desc => "Location attributes" do
+      param :city, String, :desc => "City", :required => true
+      param :country, String, :desc => "Country", :required => true
+      param :latitude, Float, :desc => "Latitude", :required => true
+      param :longitude, Float, :desc => "Longitude", :required => true
+    end
+  end
+
   api :GET, '/api/v1/search/users_by_nickname?nickname=:nickname', 'Show all users with given nickname'
   returns :array_of => :user, :desc => 'List of users'
+  param_group :user
   def users_by_nickname
     search do
       @matches = []
@@ -35,6 +45,8 @@ class Api::V1::SearchesController < BaseController
 
   api :GET, '/api/v1/search/users_by_location?latitude=:latitude&longitude=:longitude', 'Show all users within 10km of location'
   returns :array_of => :user, :desc => 'List of users'
+  param_group :user
+  param_group :location_attributes
   def users_by_location
     search do
       @users = []
@@ -48,6 +60,7 @@ class Api::V1::SearchesController < BaseController
 
   api :GET, '/api/v1/search/posts_by_title?title=:title', 'Lists all posts with given title'
   returns :array_of => :user, :desc => 'List of posts'
+  param_group :post
   def posts_by_title
     search do
       @matches = []
@@ -62,6 +75,8 @@ class Api::V1::SearchesController < BaseController
 
   api :GET, '/api/v1/search/posts_by_location?latitude=:latitude&longitude=:longitude', 'Show all posts within 10km of location'
   returns :array_of => :user, :desc => 'List of users'
+  param_group :post
+  param_group :location_attributes
   def posts_by_location
     search do
       @posts = []
