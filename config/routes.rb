@@ -17,6 +17,6 @@ Rails.application.routes.draw do
       get 'search/:action' => 'searches#:action'
     end
   end
-
+  root 'admin/dashboard#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

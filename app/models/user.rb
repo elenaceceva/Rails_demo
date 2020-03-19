@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-   attr_accessor :location_attributes
+  attr_accessor :location_attributes
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
