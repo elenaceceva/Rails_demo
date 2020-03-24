@@ -1,7 +1,9 @@
 class Post < ApplicationRecord
   attr_accessor :location_attributes
+
   belongs_to :user
   belongs_to :location, optional: true
+
   validates :title, length: { maximum: 120 }, presence: true
   validates :description, length: { maximum: 1000 }, presence: true
 

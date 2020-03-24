@@ -1,20 +1,20 @@
 class User < ApplicationRecord
-  attr_accessor :location_attributes
-
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
-  has_many :posts
+  attr_accessor :location_attributes
+
   belongs_to :location, optional: true
+  has_many :posts
+
   validates :email, length: { maximum: 120 }
   validates :nickname, presence: true, length: { maximum: 20 }, uniqueness: true
   validates :firstname, length: { maximum: 40}
-  validates :lastname, length: { maximum: 40}
-  before_save :assign_location, if: :location_attributes
+
+  before_save :assign_location
 
   def assign_location
+    if location_attributes.present?
     location = Location.find_or_create_by(country: location_attributes[:country],
                                           city: location_attributes[:city],
                                           longitude: location_attributes[:longitude],
@@ -22,5 +22,6 @@ class User < ApplicationRecord
 
 
     self.location_id = location.id
+   end
   end
 end
