@@ -22,7 +22,7 @@ class Api::V1::UsersController < BaseController
   api :GET, "/api/v1/users", "Show all users "
   returns :array_of => :user, :code => 200, :desc => "All users"
   def index
-    @users = User.all.order("updated_at DESC")
+    @users = User.all.order("updated_at DESC").page(params[:page]).per(params[:per])
     render json: @users
   end
 

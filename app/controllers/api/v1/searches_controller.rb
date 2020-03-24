@@ -30,7 +30,7 @@ class Api::V1::SearchesController < BaseController
   returns :array_of => :user, :desc => 'List of users'
   param_group :user
   def users_by_nickname
-    @results = User.where('nickname ILIKE ?', params[:nickname])
+    @results = User.where('nickname ILIKE ?', params[:nickname]).page(params[:page]).per(params[:per])
     render json: @results
   end
 
@@ -44,7 +44,7 @@ class Api::V1::SearchesController < BaseController
     @locations.each do |location|
     @users << location.users
     end
-    @users.flatten
+    @users.flatten.Kaminari.paginate_array(@users).page(params[:page]).per(params[:per])
     render json: @users
   end
 
@@ -52,7 +52,7 @@ class Api::V1::SearchesController < BaseController
   returns :array_of => :user, :desc => 'List of posts'
   param_group :post
   def posts_by_title
-    @results = Post.where('title ILIKE ?', params[:title])
+    @results = Post.where('title ILIKE ?', params[:title]).page(params[:page]).per(params[:per])
     render json: @results
   end
 
@@ -66,8 +66,9 @@ class Api::V1::SearchesController < BaseController
     @locations.each do |location|
       @posts << location.posts
     end
-    @posts.flatten
+    @posts.flatten.Kaminari.paginate_array(@posts).page(params[:page]).per(params[:per])
     render json: @posts
   end
+
 end
 

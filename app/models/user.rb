@@ -4,7 +4,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :confirmable
 
   has_many :posts
   belongs_to :location, optional: true
@@ -12,7 +12,7 @@ class User < ApplicationRecord
   validates :nickname, presence: true, length: { maximum: 20 }, uniqueness: true
   validates :firstname, length: { maximum: 40}
   validates :lastname, length: { maximum: 40}
-  before_save :assign_location
+  before_save :assign_location, if: :location_attributes
 
   def assign_location
     location = Location.find_or_create_by(country: location_attributes[:country],
@@ -23,6 +23,4 @@ class User < ApplicationRecord
 
     self.location_id = location.id
   end
-
-
 end

@@ -23,10 +23,10 @@ class Api::V1::PostsController < BaseController
   returns :array_of => :post, :code => 200, :desc => "All posts"
   def index
     if (params.has_key? 'user_id')
-      @posts = Post.where(user_id: params[:user_id]).order('created_at DESC')
+      @posts = Post.where(user_id: params[:user_id]).order('created_at DESC').page(params[:page]).per(params[:per])
       render json: @posts
     else
-      @posts = Post.all.order("created_at DESC")
+      @posts = Post.all.order("created_at DESC").page(params[:page])
       render json: @posts
     end
   end
