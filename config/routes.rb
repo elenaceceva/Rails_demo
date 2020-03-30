@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :posts, only: [:index, :show, :destroy]
+      resources :posts, only: [:index]
       get 'search/:action' => 'searches#:action'
     end
   end

@@ -1,5 +1,5 @@
 class Api::V1::UsersController < BaseController
-  #before_action :doorkeeper_authorize!
+  before_action :doorkeeper_authorize! unless Rails.env.test?
 
   def_param_group :user do
     param :user, Hash, :desc => "User info" do
@@ -47,7 +47,7 @@ class Api::V1::UsersController < BaseController
   end
   def show
     @user = User.find(params[:id])
-    render json: @user
+    render json: @user, status: 200, data: @users
   end
 
   api :PATCH, "/api/v1/users/:user_id", "Update user"
@@ -70,7 +70,9 @@ class Api::V1::UsersController < BaseController
     def destroy
       @user = User.find(params[:id])
       @user.destroy
+      render json: @user, status: 204
     end
+
   private
 
   def user_params

@@ -1,6 +1,6 @@
 class Api::V1::PostsController < BaseController
   before_action :set_post, only: [:show, :update, :destroy]
-  #before_action :doorkeeper_authorize!
+  before_action :doorkeeper_authorize! unless Rails.env.test?
 
   def_param_group :post do
     param :post, Hash, :desc => "Post info" do
@@ -24,11 +24,10 @@ class Api::V1::PostsController < BaseController
   def index
     if (params.has_key? 'user_id')
       @posts = Post.where(user_id: params[:user_id]).order('created_at DESC').page(params[:page]).per(params[:per])
-      render json: @posts
     else
       @posts = Post.all.order("created_at DESC").page(params[:page])
-      render json: @posts
     end
+    render json: @posts, status: 200, data: @posts
   end
 
   api :GET, "/api/v1/users/:user_id/posts/:id", "Show post "
@@ -37,7 +36,7 @@ class Api::V1::PostsController < BaseController
     param_group :location_attributes
   end
   def show
-    render json: @post
+    render json: @post, status: 200, data: @posts
   end
 
   api :POST, "/api/v1/users/:user_id/posts", "Create post "
@@ -48,12 +47,10 @@ class Api::V1::PostsController < BaseController
   def create
     @user = User.find(params[:user_id])
     @post = @user.posts.build(post_params)
-
     if @post.save
-      render json: @post, status: :created, data: @user
+      render json: @post, status: 201, data: @post
     else
       render json: @post.errors, status: :unprocessable_entity
-
       end
     end
 
@@ -68,7 +65,7 @@ class Api::V1::PostsController < BaseController
     @post = @user.posts.find(params[:id])
     authorize @post
     if @post.update_attributes(post_params)
-      render json: @post
+      render json: @post, status: 200, data: @posts
     else
       render json: @post.errors, status: :unprocessable_entity
     end
@@ -80,6 +77,7 @@ class Api::V1::PostsController < BaseController
   def destroy
     authorize @post
     @post.destroy
+    render json: @post, status: 204
   end
 
   private

@@ -1,8 +1,8 @@
 class Post < ApplicationRecord
-  attr_accessor :location_attributes
-
   belongs_to :user
   belongs_to :location, optional: true
+
+  attr_accessor :location_attributes
 
   validates :title, length: { maximum: 120 }, presence: true
   validates :description, length: { maximum: 1000 }, presence: true
@@ -14,7 +14,6 @@ class Post < ApplicationRecord
                                           city: location_attributes[:city],
                                           longitude: location_attributes[:longitude],
                                           latitude: location_attributes[:latitude])
-
     self.location_id = location.id
   end
 end
