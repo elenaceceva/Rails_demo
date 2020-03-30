@@ -1,6 +1,6 @@
 class Api::V1::PostsController < BaseController
   before_action :set_post, only: [:show, :update, :destroy]
-  before_action :doorkeeper_authorize!
+  #before_action :doorkeeper_authorize!
 
   def_param_group :post do
     param :post, Hash, :desc => "Post info" do
@@ -76,7 +76,7 @@ class Api::V1::PostsController < BaseController
 
   # DELETE /posts/1
   api :DELETE, "/api/v1/users/:user_id/posts/:id", "Delete post"
-  returns :code => 200, :desc => "Delete post"
+  returns :code => 204, :desc => "Delete post"
   def destroy
     authorize @post
     @post.destroy

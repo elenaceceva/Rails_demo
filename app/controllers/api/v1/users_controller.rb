@@ -1,5 +1,5 @@
 class Api::V1::UsersController < BaseController
-  before_action :doorkeeper_authorize!
+  #before_action :doorkeeper_authorize!
 
   def_param_group :user do
     param :user, Hash, :desc => "User info" do
@@ -23,7 +23,7 @@ class Api::V1::UsersController < BaseController
   returns :array_of => :user, :code => 200, :desc => "All users"
   def index
     @users = User.all.order("updated_at DESC").page(params[:page]).per(params[:per])
-    render json: @users
+    render json: @users, status: 200, data: @users
   end
 
   api :POST, "/api/v1/users", "Create user "
@@ -66,7 +66,7 @@ class Api::V1::UsersController < BaseController
   end
 
   api :DELETE, "/api/v1/users/:user_id", "Delete user"
-  returns :code => 200, :desc => "Delete user"
+  returns :code => 204, :desc => "Delete user"
     def destroy
       @user = User.find(params[:id])
       @user.destroy

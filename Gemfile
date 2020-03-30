@@ -40,6 +40,7 @@ group :development, :test do
   gem 'ffaker'
   gem 'shoulda-matchers'
   gem 'shoulda-callback-matchers'
+  gem 'rails-controller-testing'
 end
 
 group :development do
