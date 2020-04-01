@@ -6,12 +6,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
 
     context "when is successfully saved" do
       it 'is valid' do
-        @post = Post.new(title: "title", description: "something",
-                         location_attributes: {
-                             country: "Macedonia",
-                             city: "Skopje",
-                             longitude: 21.4254,
-                             latitude: 41.9981})
+        @post = FactoryBot.build(:post)
       end
     end
 
@@ -38,11 +33,12 @@ RSpec.describe Api::V1::PostsController, type: :controller do
   end
   describe 'GET #show' do
     before :each do
-      @post = create(:post)
+      @post = FactoryBot.create(:post)
+
     end
 
     it 'assigns the requested post as @post' do
-      get :show, id: @post.id, format: :json
+      get :show, params: { id: @post.id }, format: :json
       expect(response.status).to be(200)
       expect(assigns(:post)).to eq @post
     end
@@ -53,12 +49,12 @@ RSpec.describe Api::V1::PostsController, type: :controller do
     end
 
     it 'returns json for the requested post' do
-      get :show, id: @post.id, format: :json
-      expect(json['id']).to eq(@post.id)
-      expect(json['title']).to eq(@post.title)
-      expect(json['description']).to eq(@post.description)
-      expect(json['user_id']).to eq(@post.user_id)
-      expect(json['location_id']).to eq(@post.location_id)
+      get :show,  id: @post.id, format: :json
+      expect(JSON['id']).to eq( id: @post.id )
+      expect(JSON['title']).to eq(@post.title)
+      expect(JSON['description']).to eq(@post.description)
+      expect(JSON['user_id']).to eq(@post.user_id)
+      expect(JSON['location_id']).to eq(@post.location_id)
     end
   end
 
@@ -67,38 +63,38 @@ RSpec.describe Api::V1::PostsController, type: :controller do
       Post.all.destroy_all
       @posts = []
       2.times do
-        p = create(:post)
+        p = FactoryBot.build(:post)
         @posts << p
       end
     end
 
     it 'assigns the page of posts as @posts' do
-      get :index, page_size: 1, format: :json
+      get :index, params: { page_size: 1 }, format: :json
       expect(response.status).to be(200)
       expect(assigns(:posts)).to eq(@posts)
     end
 
     it 'assigns the correct amount of posts according to per_page parameter' do
-      get :index, page_size: 1, format: :json
+      get :index, params: { page_size: 1 }, format: :json
       expect(response.status).to be(200)
       expect(assigns(:posts).count).to eq(1)
     end
 
     it 'assigns the correct page of posts according to page parameter' do
-      get :index, page: 2, page_size: 1, format: :json
+      get :index, params: { page: 2 }, params: { page_size: 1 }, format: :json
       expect(response.status).to be(200)
       expect(assigns(:posts).to_ary).to eq([@posts[1]])
     end
 
     it 'returns a json that contains the posts' do
       get :index, format: :json
-      expect(json).to have_key('data')
+      expect(JSON).to have_key('data')
     end
   end
 
   describe 'PUT #update' do
     before :each do
-      @post = create(:post)
+      @post = FactoryBot.create(:post)
       @post_hash = { title: 'New Title', description: 'New Description',
                      location_attributes: { city: 'New City',
                                             country: 'New Country',
@@ -131,7 +127,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
 
   describe 'POST #create' do
     before :each do
-      @post = build(:post)
+      @post = FactoryBot.build(:post)
       Post.all.destroy_all
     end
 
@@ -162,11 +158,11 @@ RSpec.describe Api::V1::PostsController, type: :controller do
 
   describe 'GET #destroy' do
     before :each do
-      @post = create(:post)
+      @post = FactoryBot.create(:post)
     end
 
     it 'responds with status 204' do
-      delete :destroy, id: @post.id
+      delete :destroy, params: { id: @post.id }
       expect(response.status).to be(204)
     end
   end

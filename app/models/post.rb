@@ -10,10 +10,12 @@ class Post < ApplicationRecord
   before_save :assign_location
 
   def assign_location
+    if location_attributes.present?
     location = Location.find_or_create_by(country: location_attributes[:country],
                                           city: location_attributes[:city],
                                           longitude: location_attributes[:longitude],
                                           latitude: location_attributes[:latitude])
     self.location_id = location.id
+    end
   end
 end

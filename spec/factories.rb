@@ -9,13 +9,16 @@ FactoryBot.define do
   factory :post do
     title {"example"}
     description {"description"}
+    user { User.first || association(:user) }
+    location { Location.first || association(:location) }
   end
 
-  factory :user do
-    email {"john@gmail.com"}
-    password {"password"}
-    nickname {"john"}
-    firstname {"John"}
-    lastname {"Doe"}
+  factory :user do |u|
+    u.email { |n| "john#{n}@awesome.com"}
+    u.password {"password"}
+    u.nickname { |n| "john#{n}"}
+    u.firstname {"John"}
+    u.lastname {"Doe"}
+    u.location { Location.first || association(:location) }
   end
 end
