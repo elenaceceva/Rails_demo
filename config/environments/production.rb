@@ -76,14 +76,14 @@ Rails.application.configure do
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
-  config.action_mailer.default_url_options = { :host => 'warm-gorge-77467.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => "https://warm-gorge-77467.herokuapp.com" }
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      :user_name => 'c8880145229852',
-      :password => '4d560c637cfabc',
+      :user_name => '007a50894484e7',
+      :password => '60848d2d29a0c9',
       :address => 'smtp.mailtrap.io',
       :domain => 'smtp.mailtrap.io',
       :port => '2525',
