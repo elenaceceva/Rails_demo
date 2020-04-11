@@ -6,7 +6,6 @@ class User < ApplicationRecord
   attr_accessor :picture_attributes
 
   has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" },
-                    :s3_protocol => ‘https’,
                     :storage => ‘s3’,
                     :s3_region => ENV[us-east-2]
   validates_attachment_content_type :picture, content_type: /\Aimage\/.*\z/
