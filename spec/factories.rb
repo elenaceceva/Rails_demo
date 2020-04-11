@@ -1,4 +1,13 @@
 FactoryBot.define do
+  factory :post_tag do
+    post { nil }
+    tag { nil }
+  end
+
+  factory :tag do
+    name { "MyString" }
+  end
+
   factory :location do
     city {"City"}
     country {"Country"}

@@ -4,6 +4,9 @@ class User < ApplicationRecord
 
   attr_accessor :location_attributes
 
+  has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" }
+  validates_attachment_content_type :picture, content_type: /\Aimage\/.*\z/
+
   validates :email, length: { maximum: 120 }
   validates :nickname, presence: true, length: { maximum: 20 }, uniqueness: true
   validates :firstname, length: { maximum: 40}

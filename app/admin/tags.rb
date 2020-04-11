@@ -1,4 +1,4 @@
-ActiveAdmin.register Location do
+ActiveAdmin.register Tag do
 
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
@@ -6,10 +6,7 @@ ActiveAdmin.register Location do
   # Uncomment all parameters which should be permitted for assignment
   #
   index do
-    column :city
-    column :country
-    column :longitude
-    column :latitude
+    column :name
     actions
   end
 

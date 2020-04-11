@@ -1,5 +1,5 @@
 class Api::V1::UsersController < BaseController
-  before_action :doorkeeper_authorize! unless Rails.env.test?
+  # before_action :doorkeeper_authorize! unless Rails.env.test?
 
   def_param_group :user do
     param :user, Hash, :desc => "User info" do
@@ -76,6 +76,6 @@ class Api::V1::UsersController < BaseController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :nickname, :firstname, :lastname, location_attributes: [:country, :city, :latitude, :longitude ])
+    params.require(:user).permit(:email, :password, :nickname, :firstname, :lastname, location_attributes: [:country, :city, :latitude, :longitude ], :picture)
   end
 end

@@ -70,5 +70,9 @@ class Api::V1::SearchesController < BaseController
     render json: @posts
   end
 
+  def posts_by_tag
+    @posts = Tag.find_by!(name: params[:name]).posts
+    render json: @posts
+  end
 end
 

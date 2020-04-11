@@ -32,6 +32,8 @@ gem "pundit"
 gem 'apipie-rails'
 gem 'kaminari'
 gem 'newrelic_rpm'
+gem 'activeadmin_addons'
+gem "paperclip"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
