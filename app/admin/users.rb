@@ -51,7 +51,7 @@ ActiveAdmin.register User do
       row :firstname
       row :lastname
       row :location
-      image_row :picture
+      image_row :picture, style: :thumb
     end
   end
 end
