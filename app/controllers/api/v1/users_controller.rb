@@ -76,6 +76,6 @@ class Api::V1::UsersController < BaseController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :nickname, :firstname, :lastname, location_attributes: [:country, :city, :latitude, :longitude ], :picture)
+    params.require(:user).permit(:email, :password, :nickname, :firstname, :lastname, :picture, location_attributes: [:country, :city, :latitude, :longitude ])
   end
 end
