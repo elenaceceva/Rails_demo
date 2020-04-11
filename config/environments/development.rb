@@ -46,6 +46,7 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   config.paperclip_defaults = {
       storage: :s3,
+      :s3_permissions => 'public-read',
       s3_credentials: {
           bucket: ENV["S3_BUCKET_NAME"],
           access_key_id: ENV["AWS_ACCESS_KEY_ID"],
