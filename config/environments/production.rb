@@ -89,4 +89,13 @@ Rails.application.configure do
       :port => '2525',
       :authentication => :cram_md5
   }
+  config.paperclip_defaults = {
+      storage: :s3,
+      s3_credentials: {
+          bucket: ENV.fetch('rails-demo-app-bucket'),
+          access_key_id: ENV.fetch('AKIAIKDRPYYTNVN4SA3A'),
+          secret_access_key: ENV.fetch('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'),
+          s3_region: ENV.fetch('US East (Ohio) us-east-2'),
+      }
+  }
 end
