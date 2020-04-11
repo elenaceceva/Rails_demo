@@ -88,6 +88,6 @@ class Api::V1::PostsController < BaseController
 
     # Only allow a trusted parameter "white list" through.
     def post_params
-      params.require(:post).permit(:title, :description, :user_id, location_attributes: [:city, :country, :latitude, :longitude ], tag_attributes: [:name], :picture)
+      params.require(:post).permit(:title, :description, :user_id, :picture, location_attributes: [:city, :country, :latitude, :longitude ], tag_attributes: [:name])
     end
 end
