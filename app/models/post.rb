@@ -8,9 +8,8 @@ class Post < ApplicationRecord
   attr_accessor :tag_attributes
   attr_accessor :picture_attributes
 
-  has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" },
-                    :storage => ‘s3’,
-                    :s3_region => ENV[us-east-2]
+  has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" }
+
   validates_attachment_content_type :picture, content_type: /\Aimage\/.*\z/
 
   validates :title, length: { maximum: 120 }, presence: true
