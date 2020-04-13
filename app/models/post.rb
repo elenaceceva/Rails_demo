@@ -5,7 +5,7 @@ class Post < ApplicationRecord
   has_many :tags, through: :post_tags
 
   attr_accessor :location_attributes
-  attr_accessor :tag_attributes
+  attr_accessor :tag_names
   attr_accessor :picture_attributes
 
   has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" }

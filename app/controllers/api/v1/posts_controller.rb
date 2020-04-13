@@ -1,6 +1,6 @@
 class Api::V1::PostsController < BaseController
   before_action :set_post, only: [:show, :update, :destroy]
-  before_action :doorkeeper_authorize! unless Rails.env.test?
+  #before_action :doorkeeper_authorize! unless Rails.env.test?
 
   def_param_group :post do
     param :post, Hash, :desc => "Post info" do
@@ -87,6 +87,6 @@ class Api::V1::PostsController < BaseController
     end
 
     def post_params
-      params.require(:post).permit(:title, :description, :user_id, :picture, location_attributes: [:city, :country, :latitude, :longitude ], tag_attributes: [:name])
+      params.require(:post).permit(:title, :description, :user_id, :picture, location_attributes: [:city, :country, :latitude, :longitude ], :tag_names)
     end
 end
