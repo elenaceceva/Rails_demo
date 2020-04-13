@@ -1,5 +1,5 @@
 class Api::V1::UsersController < BaseController
-  # before_action :doorkeeper_authorize! unless Rails.env.test?
+  before_action :doorkeeper_authorize! unless Rails.env.test?
 
   def_param_group :user do
     param :user, Hash, :desc => "User info" do

@@ -9,13 +9,12 @@ class Post < ApplicationRecord
   attr_accessor :picture_attributes
 
   has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" }
-
   validates_attachment_content_type :picture, content_type: /\Aimage\/.*\z/
 
   validates :title, length: { maximum: 120 }, presence: true
   validates :description, length: { maximum: 1000 }, presence: true
 
-  before_save :assign_location
+  before_save :assign_location, :assign_tags
 
 
   def assign_location
@@ -28,7 +27,26 @@ class Post < ApplicationRecord
     end
   end
 
-  def assign_tag
-      self.tags = Tag.find_or_create_by(name: tag_attributes[:name])
+  def assign_tags
+    tag_names.split(',').each do |name|
+      tag = Tag.find_or_create_by(name: name.strip)
+      tags << tag unless tags.exists?(tag.id)
     end
+    delete_tags
+  end
+
+  def delete_tags
+    names = tag_names.split(',').map { |n| n.strip }
+    tags.each do |tag|
+      tags.destroy(tag) unless names.include?(tag.name)
+    end
+  end
+
+  def tag_names
+    @tag_names.blank? ? tags.map(&:name).join(', ') : @tag_names
+  end
+
+  def tag_names=(names)
+    @tag_names = names
+  end
 end
