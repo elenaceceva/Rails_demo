@@ -41,12 +41,4 @@ class Post < ApplicationRecord
       tags.destroy(tag) unless names.include?(tag.name)
     end
   end
-
-  def tag_names
-    @tag_names.blank? ? tags.map(&:name).join(', ') : @tag_names
-  end
-
-  def tag_names=(names)
-    @tag_names = names
-  end
 end

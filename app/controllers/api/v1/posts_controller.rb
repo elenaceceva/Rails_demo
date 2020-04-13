@@ -87,6 +87,6 @@ class Api::V1::PostsController < BaseController
     end
 
     def post_params
-      params.require(:post).permit(:title, :description, :user_id, :picture, location_attributes: [:city, :country, :latitude, :longitude ], :tag_names)
+      params.require(:post).permit(:title, :description, :user_id, :picture, :tag_names, location_attributes: [:city, :country, :latitude, :longitude ])
     end
 end
