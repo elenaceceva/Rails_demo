@@ -1,6 +1,6 @@
 class Api::V1::PostsController < BaseController
   before_action :set_post, only: [:show, :update, :destroy]
-  #before_action :doorkeeper_authorize! unless Rails.env.test?
+  before_action :doorkeeper_authorize! unless Rails.env.test?
 
   def_param_group :post do
     param :post, Hash, :desc => "Post info" do

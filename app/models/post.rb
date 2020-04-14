@@ -8,13 +8,13 @@ class Post < ApplicationRecord
   attr_accessor :tag_names
   attr_accessor :picture_attributes
 
-  has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" }
-  validates_attachment_content_type :picture, content_type: /\Aimage\/.*\z/
-
   validates :title, length: { maximum: 120 }, presence: true
   validates :description, length: { maximum: 1000 }, presence: true
 
   before_save :assign_location, :assign_tags
+
+  has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" }
+  validates_attachment_content_type :picture, content_type: /\Aimage\/.*\z/
 
 
   def assign_location
