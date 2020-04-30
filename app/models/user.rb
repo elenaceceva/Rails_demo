@@ -7,16 +7,15 @@ class User < ApplicationRecord
 
   validates :email, length: { maximum: 120 }
   validates :nickname, presence: true, length: { maximum: 20 }, uniqueness: true
-  validates :firstname, length: { maximum: 40}
+  validates :firstname, length: { maximum: 40 }
 
   before_save :assign_location
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
-  has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" }
+  has_attached_file :picture, styles: { medium: '300x300>', thumb: '100x100>' }
   validates_attachment_content_type :picture, content_type: /\Aimage\/.*\z/
-
 
   def assign_location
     if location_attributes.present?
@@ -25,6 +24,6 @@ class User < ApplicationRecord
                                           longitude: location_attributes[:longitude],
                                           latitude: location_attributes[:latitude])
     self.location_id = location.id
-   end
+    end
   end
 end

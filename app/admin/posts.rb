@@ -1,11 +1,6 @@
 ActiveAdmin.register Post do
-
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  permit_params :title, :description, :user_id, :picture, :tag_names, location_attributes: [:city, :country, :latitude, :longitude ]
+  permit_params :title, :description, :user_id, :picture, :tag_names,
+                location_attributes: [:city, :country, :latitude, :longitude]
   form do |f|
     f.semantic_errors(*f.object.errors.keys)
     f.inputs  do
@@ -18,11 +13,11 @@ ActiveAdmin.register Post do
         ff.input :country
         ff.input :latitude
         ff.input :longitude
-      end
+        end
       f.inputs 'Tags' do
       f.text_field :tag_names
       end
-      end
+    end
     f.actions
   end
 

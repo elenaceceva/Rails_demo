@@ -113,7 +113,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
              nickname: @user.nickname, firstname: @user.firstname, lastname: @user.lastname,
              city: @user.location.city, country: @user.location.country,
              longitude: @user.location.longitude, latitude: @user.location.latitude,
-             format: :json}.to change(User,:count).by(1)
+             format: :json}.to change(User, :count).by(1)
     end
 
     it 'responds with status code 201' do

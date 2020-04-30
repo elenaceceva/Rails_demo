@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-
   before { @post = FactoryBot.build(:post) }
   subject { @post }
 

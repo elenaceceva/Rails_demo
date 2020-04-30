@@ -1,28 +1,27 @@
 class Api::V1::SearchesController < BaseController
-
   def_param_group :user do
-    param :user, Hash, :desc => "User info" do
-      param :email, String, :desc => "Email" , :required => true
-      param :nickname, String, :desc => "Nickname", :required => true
-      param :firstname, String, :desc => "Firstname"
-      param :lastname, String, :desc => "Lastname"
+    param :user, Hash, :desc => 'User info' do
+      param :email, String, :desc => 'Email', :required => true
+      param :nickname, String, :desc => 'Nickname', :required => true
+      param :firstname, String, :desc => 'Firstname'
+      param :lastname, String, :desc => 'Lastname'
     end
   end
 
   def_param_group :post do
-    param :post, Hash, :desc => "Post info" do
-      param :title, String, :desc => "Title" , :required => true
-      param :description, String, :desc => "Description", :required => true
+    param :post, Hash, :desc => 'Post info' do
+      param :title, String, :desc => 'Title', :required => true
+      param :description, String, :desc => 'Description', :required => true
       param :user_id, Integer, required: true
     end
   end
 
   def_param_group :location_attributes do
-    param :location_attributes, Hash, :desc => "Location attributes" do
-      param :city, String, :desc => "City", :required => true
-      param :country, String, :desc => "Country", :required => true
-      param :latitude, Float, :desc => "Latitude", :required => true
-      param :longitude, Float, :desc => "Longitude", :required => true
+    param :location_attributes, Hash, :desc => 'Location attributes' do
+      param :city, String, :desc => 'City', :required => true
+      param :country, String, :desc => 'Country', :required => true
+      param :latitude, Float, :desc => 'Latitude', :required => true
+      param :longitude, Float, :desc => 'Longitude', :required => true
     end
   end
 

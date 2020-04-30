@@ -13,9 +13,8 @@ class Post < ApplicationRecord
 
   before_save :assign_location, :assign_tags
 
-  has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" }
+  has_attached_file :picture, styles: { medium: '300x300>', thumb: '100x100>' }
   validates_attachment_content_type :picture, content_type: /\Aimage\/.*\z/
-
 
   def assign_location
     if location_attributes.present?

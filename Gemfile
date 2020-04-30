@@ -24,21 +24,21 @@ gem 'puma', '~> 3.7'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
-gem "doorkeeper", "~> 5.3"
+gem 'doorkeeper', "~> 5.3"
 gem 'devise'
 gem 'activeadmin'
 gem 'geokit-rails'
-gem "pundit"
+gem 'pundit'
 gem 'apipie-rails'
 gem 'kaminari'
 gem 'newrelic_rpm'
 gem 'activeadmin_addons'
-gem "paperclip"
+gem 'paperclip'
 gem 'aws-sdk'
 gem 'figaro'
+gem 'rubocop', require: false
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
   gem 'factory_bot_rails'

@@ -12,6 +12,4 @@ ActiveAdmin.register Location do
     column :latitude
     actions
   end
-
-
 end
