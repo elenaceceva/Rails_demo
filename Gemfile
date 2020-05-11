@@ -37,6 +37,7 @@ gem 'paperclip'
 gem 'aws-sdk'
 gem 'figaro'
 gem 'rubocop', require: false
+gem "rubycritic", require: false
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
